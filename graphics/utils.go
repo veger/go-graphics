@@ -8,10 +8,10 @@ import (
 // FloatSize is the size of a 32-bit float
 const FloatSize = 4
 
-// CastUint32sToBytes create byte array from uint32 array
-func castUint32sToBytes(ints []uint32) ([]byte, error) {
+// CastUint32sToBytes create byte array from a TriangleIndices array
+func castTriangleIndicesToBytes(indices []TriangleIndices) ([]byte, error) {
 	buf := new(bytes.Buffer)
-	err := binary.Write(buf, binary.LittleEndian, ints)
+	err := binary.Write(buf, binary.LittleEndian, indices)
 	if err != nil {
 		return nil, err
 	}
