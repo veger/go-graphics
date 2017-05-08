@@ -11,8 +11,15 @@ type Program struct {
 	shader gl.Program
 }
 
-// NewProgram creates a new (default) program, that uses position (index = 0) and texture (index = 3) data
-func (e *Engine) NewProgram() (*Program, error) {
+// NewProgram creates a new program, optionally provide custom vertex and/or fragment shader(s)
+// The default program uses position (index = 0) and texture (index = 3) data
+func (e *Engine) NewProgram(vertexShader, fragmentShader string) (*Program, error) {
+	if vertexShader == "" {
+		vertexShader = vertexShaderDefault
+	}
+	if fragmentShader == "" {
+		fragmentShader = fragmentShaderDefault
+	}
 	shader, err := glutil.CreateProgram(e.glctx, vertexShader, fragmentShader)
 	if err != nil {
 		return nil, err
@@ -36,7 +43,7 @@ func (p *Program) Activate() {
 	p.engine.glctx.UseProgram(p.shader)
 }
 
-const vertexShader = `#version 300 es
+const vertexShaderDefault = `#version 300 es
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 texCoord;
@@ -44,11 +51,11 @@ layout (location = 1) in vec2 texCoord;
 out vec2 TexCoord;
 
 void main() {
-	gl_Position = vec4(position.x, position.y, position.z, 1.0);
+	gl_Position = vec4(position, 1.0);
 	TexCoord = texCoord;
 }`
 
-const fragmentShader = `#version 300 es
+const fragmentShaderDefault = `#version 300 es
 precision mediump float;
 
 in vec2 TexCoord;
