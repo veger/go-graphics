@@ -1,0 +1,5 @@
+# Make sure to use our fork/branch
+[[overrides]]
+  name = "golang.org/x/mobile"
+  branch = "veger"
+  source = "https://github.com/veger/mobile.git"

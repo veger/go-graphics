@@ -1,0 +1,8 @@
+memo = "37d453266a06c247f571a7afc79571838823bc046bf3109b5b365e1443ab16ec"
+
+[[projects]]
+  branch = "veger"
+  name = "golang.org/x/mobile"
+  packages = ["event/size","exp/f32","exp/gl/glutil","geom","gl"]
+  revision = "2bc17bb6b868fd724ae101f2456a3f3d40ad9e70"
+  source = "https://github.com/veger/mobile.git"
