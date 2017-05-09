@@ -11,6 +11,9 @@ type Program struct {
 	shader gl.Program
 }
 
+// UniformLocation is the location of a uniform in a Program
+type UniformLocation int32
+
 // NewProgram creates a new program, optionally provide custom vertex and/or fragment shader(s)
 // The default program uses position (index = 0) and texture (index = 3) data
 func (e *Engine) NewProgram(vertexShader, fragmentShader string) (*Program, error) {
@@ -41,6 +44,17 @@ func (p *Program) Release() {
 // Activate actives the program (and deactives the current one)
 func (p *Program) Activate() {
 	p.engine.glctx.UseProgram(p.shader)
+}
+
+// GetUniformLocation gets the location of a uniform in the program
+func (p *Program) GetUniformLocation(name string) UniformLocation {
+	u := p.engine.glctx.GetUniformLocation(p.shader, name)
+	return UniformLocation(u.Value)
+}
+
+// SetUnitformMatrix4 sets the value of the uniform at location to mat
+func (p *Program) SetUnitformMatrix4(location UniformLocation, mat []float32) {
+	p.engine.glctx.UniformMatrix4fv(gl.Uniform{Value: int32(location)}, mat)
 }
 
 const vertexShaderDefault = `#version 300 es
