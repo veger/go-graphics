@@ -1,4 +1,22 @@
-memo = "37d453266a06c247f571a7afc79571838823bc046bf3109b5b365e1443ab16ec"
+memo = "818cb877a23589e251df3b538fa624dbcc9f39390d2883e11b937a0042a3fdb8"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/go-gl/mathgl"
+  packages = ["mgl32"]
+  revision = "9e3ea3e806141087fbb83a8a8e7038bf73eff120"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/golang/freetype"
+  packages = ["raster","truetype"]
+  revision = "bcfeb16b74e8aea9e2fe043406f2ef74b1cb0759"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/image"
+  packages = ["font","math/f32","math/fixed"]
+  revision = "f483456c9f61fd7c1e170033d58ef22ff5ffe291"
 
 [[projects]]
   branch = "veger"
