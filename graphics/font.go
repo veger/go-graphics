@@ -101,12 +101,14 @@ func (e *Engine) NewFont(ttf io.Reader, size int) (*Font, error) {
 
 	// TODO Get rid of fixed width/height
 	font.UpdateViewport(600, 800)
+	e.RegisterViewportUpdater(font)
 
 	return font, nil
 }
 
 // Release releases all resources, the font cannot be used afterwards
 func (f *Font) Release() {
+	f.engine.DeregisterViewportUpdater(f)
 	f.ebo.Release()
 	f.ebo = nil
 	f.vbo.Release()
