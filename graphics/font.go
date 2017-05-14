@@ -149,8 +149,8 @@ func (f *Font) Draw(x, y float32, str string) {
 	}
 	b, _ := d.BoundString(str)
 
-	w := (b.Max.X - b.Min.X).Ceil()
-	h := (b.Max.Y - b.Min.Y).Ceil()
+	w := b.Max.X.Ceil() - b.Min.X.Floor() + 1
+	h := b.Max.Y.Ceil() - b.Min.Y.Floor() + 1
 	im := image.NewRGBA(image.Rect(0, 0, w, h))
 	draw.Draw(im, im.Bounds(), image.Black, image.ZP, draw.Src)
 	d.Dst = im
