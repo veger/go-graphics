@@ -122,9 +122,9 @@ func (f *Font) Release() {
 }
 
 // UpdateViewport recalculates the projection matrix based on the given viewport dimensions
-func (f *Font) UpdateViewport(width, height float32) {
+func (f *Font) UpdateViewport(width, height int) {
 	// Calculate projection
-	f.projection = mgl.Ortho(-width, width, -height, height, 0, 1)
+	f.projection = mgl.Ortho(float32(-width), float32(width), float32(-height), float32(height), 0, 1)
 
 	// Udpate projection with view
 	// pos := mgl.Vec3{width, height, 0}
@@ -132,8 +132,8 @@ func (f *Font) UpdateViewport(width, height float32) {
 	// up := mgl.Vec3{0, 1, 0}
 	// view := mgl.LookAtV(pos, dir, up)
 	view := mgl.Ident4()
-	view[12] = -width
-	view[13] = -height
+	view[12] = float32(-width)
+	view[13] = float32(-height)
 	f.projection = f.projection.Mul4(view)
 }
 

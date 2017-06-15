@@ -9,16 +9,20 @@ import (
 
 // ViewportUpdater is used to let objects express their interests in changes in the viewport dimensions
 type ViewportUpdater interface {
-	UpdateViewport(width, height float32)
+	UpdateViewport(width, height int)
 }
 
 // Engine is the graphical engine that sits between the game engine and the graphical backend
 type Engine struct {
 	glctx gl.Context
 	vu    []ViewportUpdater
+	vW    int
+	vH    int
 }
 
 // NewEngine creates a new graphics engine
+//
+// Engine.UpdateViewport() can be used to set initial viewport (it makes sure that all ViewportUpdaters are notified as well)
 func NewEngine(context interface{}) (*Engine, error) {
 	glctx, ok := context.(gl.Context)
 	if !ok {
@@ -32,6 +36,7 @@ func NewEngine(context interface{}) (*Engine, error) {
 
 // StartRender starts the rendering phase (clears window/screen)
 func (e *Engine) StartRender() {
+	e.glctx.Viewport(0, 0, e.vW, e.vH)
 	e.glctx.ClearColor(0, 0, 0, 1)
 	e.glctx.Clear(gl.COLOR_BUFFER_BIT)
 }
@@ -54,7 +59,9 @@ func (e *Engine) DeregisterViewportUpdater(vu ViewportUpdater) {
 }
 
 // UpdateViewport notifies all registered ViewportUpdater objects about the (new) viewport dimensions
-func (e *Engine) UpdateViewport(width, height float32) {
+func (e *Engine) UpdateViewport(width, height int) {
+	e.vW = width
+	e.vH = height
 	for _, vu := range e.vu {
 		vu.UpdateViewport(width, height)
 	}
